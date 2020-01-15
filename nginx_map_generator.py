@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 #
 # Script for generating Nginx redirects in map file.
+#
+# Usage:
+# nginx_map_generator.py <urls.txt> 
+#
 # The input file from which the URLs in the map file will be generated
 # must be in the following format:
 #

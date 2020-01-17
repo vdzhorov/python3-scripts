@@ -48,7 +48,12 @@ class Lookup(object):
 		domainList = self.read_file()
 		for name in domainList:
 			name = self.strip_newline(name)
-			answer = dns.resolver.query(name, 'NS', raise_on_no_answer=False)
+			try:
+				answer = dns.resolver.query(name, 'NS', raise_on_no_answer=False)
+			except dns.resolver.NXDOMAIN:
+				print(f"{name} does not exist!")
+			except dns.resolver.NoNameservers:
+				print(f"{name} servfail!")
 			if answer.rrset is not None:
 				try:
 					for ns in self.nameServers:

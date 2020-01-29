@@ -51,17 +51,18 @@ class Lookup(object):
 			try:
 				answer = dns.resolver.query(name, 'NS', raise_on_no_answer=False)
 			except dns.resolver.NXDOMAIN:
-				print(f"{name} does not exist!")
+				print(f"{name}")
 			except dns.resolver.NoNameservers:
-				print(f"{name} servfail!")
+				print(f"{name} servfail")
+				continue
 			if answer.rrset is not None:
 				try:
 					for ns in self.nameServers:
 						str(answer.rrset).index(ns)
 				except ValueError:
-					pass
+					print(f"{name}")
 				else:
-					print(f"{name} matches!")
+					pass
 			else:
 				pass
 

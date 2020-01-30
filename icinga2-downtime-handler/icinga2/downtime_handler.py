@@ -6,7 +6,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 class Handler(object):
 
-	def __init__(self, icinga_url, icinga_user, icinga_pass, icinga_comment):
+	def __init__(self, icinga_url, icinga_user, icinga_pass, icinga_comment=None):
 		self.icinga_url = icinga_url
 		self.icinga_user = icinga_user
 		self.icinga_pass = icinga_pass

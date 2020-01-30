@@ -6,10 +6,11 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 class Handler(object):
 
-	def __init__(self, icinga_url, icinga_user, icinga_pass):
+	def __init__(self, icinga_url, icinga_user, icinga_pass, icinga_comment):
 		self.icinga_url = icinga_url
 		self.icinga_user = icinga_user
 		self.icinga_pass = icinga_pass
+		self.icinga_comment = icinga_comment
 		self.headers = {
     'Accept': 'application/json',
 		}
@@ -44,7 +45,7 @@ class Handler(object):
 						'filter': 'match(\"' + host + '\", host.name)',
 						'all_services': True,
 						'author': 'icingaadmin',
-						'comment': 'Automated downtime set',
+						'comment': self.icinga_comment,
 						'fixed': True,
 						'start_time': time_now,
 						'end_time': time_after
@@ -73,10 +74,10 @@ class Handler(object):
 			for r in request.json()['results']:
 				print(r['status'])
 		except AttributeError:
-			print('Host on the target monitor server does not exist')
+			print('Host on the target monitor server does not exist, Return code: 401')
 			return 1
 		except ValueError as e:
-			print("Error handling request. Return code", e)
+			print("Error handling request. Return code: ", e)
 
 	def error_handling(self, r):
 		try:
@@ -86,6 +87,6 @@ class Handler(object):
 			elif '400' in str(request.content):
 				raise ValueError('400')
 		except ValueError as e:
-			print("Error handling request. Return code", e)
+			print("Error handling request. Return code: ", e)
 			return 1
 		return r

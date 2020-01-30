@@ -67,8 +67,12 @@ class Handler(object):
 		return request
 
 	def print_request_status(self, request):
-		for r in request.json()['results']:
-			print(r['status'])
+		try:
+			for r in request.json()['results']:
+				print(r['status'])
+		except AttributeError:
+			print('Host on the target monitor server does not exist')
+			return 1
 
 	def error_handling(self, r):
 		try:

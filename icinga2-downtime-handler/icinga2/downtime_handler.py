@@ -19,6 +19,7 @@ class Handler(object):
 		return request
 
 	def prepare_request(self, method, uri, json=None, verify=False):
+		request = None
 		try:
 			if method == 'GET' or method == 'get':
 				request = requests.get(self.icinga_url + uri, json=json, headers=self.headers, verify=verify, auth=(self.icinga_user, self.icinga_pass))

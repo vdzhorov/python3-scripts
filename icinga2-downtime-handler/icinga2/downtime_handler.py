@@ -68,7 +68,7 @@ class Handler(object):
 
 	def print_request_status(self, request):
 		try:
-			if '401' in request.content:
+			if '401' in str(request.content):
 				raise ValueError('401')
 			for r in request.json()['results']:
 				print(r['status'])
@@ -81,9 +81,9 @@ class Handler(object):
 	def error_handling(self, r):
 		try:
 			request = r
-			if '500' in request.content:
+			if '500' in str(request.content):
 				raise ValueError('500')
-			elif '400' in request.content:
+			elif '400' in str(request.content):
 				raise ValueError('400')
 		except ValueError as e:
 			print("Error handling request. Return code", e)

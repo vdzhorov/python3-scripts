@@ -23,7 +23,7 @@ class Handler(object):
 		try:
 			if method == 'GET' or method == 'get':
 				request = requests.get(self.icinga_url + uri, json=json, headers=self.headers, verify=verify, auth=(self.icinga_user, self.icinga_pass))
-			elif method == 'POST' or method == 'get':
+			elif method == 'POST' or method == 'post':
 				request = requests.post(self.icinga_url + uri, json=json, headers=self.headers, verify=verify, auth=(self.icinga_user, self.icinga_pass))
 			else:
 				raise ValueError('Incorrect method')
@@ -68,18 +68,22 @@ class Handler(object):
 
 	def print_request_status(self, request):
 		try:
+			if '401' in request.content:
+				raise ValueError('401')
 			for r in request.json()['results']:
 				print(r['status'])
 		except AttributeError:
 			print('Host on the target monitor server does not exist')
 			return 1
+		except ValueError as e:
+			print("Error handling request. Return code", e)
 
 	def error_handling(self, r):
 		try:
 			request = r
-			if '500' in str(request):
+			if '500' in request.content:
 				raise ValueError('500')
-			elif '400' in str(request):
+			elif '400' in request.content:
 				raise ValueError('400')
 		except ValueError as e:
 			print("Error handling request. Return code", e)

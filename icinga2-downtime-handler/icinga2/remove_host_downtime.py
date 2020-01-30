@@ -1,11 +1,6 @@
 from downtime_handler import Handler
-import sensitive_data
 from sys import argv
 
-script, host = argv
+script, host, icinga2_hostname, icinga2_user, icinga2_pass = argv
 
-hostname=sensitive_data.hostname
-username=sensitive_data.username
-password=sensitive_data.password
-
-Handler(hostname, username, password).remove_host_downtime(host)
+Handler(icinga2_hostname, icinga2_user, icinga2_pass).remove_host_downtime(host)

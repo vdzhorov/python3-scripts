@@ -27,7 +27,7 @@ class Handler(object):
 			else:
 				raise ValueError('Incorrect method')
 		except ValueError as e:
-			print("Unahndled exception in request method: ", e)
+			print("Unhandled exception in request method: ", e)
 		return request
 
 	def get_all_hosts(self):

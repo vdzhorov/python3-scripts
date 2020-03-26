@@ -37,7 +37,7 @@ class Convert(object):
 	def regex_replace(self, line):
 		return(re.sub\
 		(r"^(https?:[\/]{2}[a-z0-9]*\.[a-z0-9]+)(.*)\s(https?:[\/]{2}[a-z0-9]*\.[a-z0-9]+)(.*)",\
-		r"\2 \4", line))
+		r"\2 \4;", line))
 
 	def read_source_file(self):
 		# Create filehandle with the raw source file
